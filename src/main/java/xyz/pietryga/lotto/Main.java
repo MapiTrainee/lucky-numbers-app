@@ -1,67 +1,56 @@
 package xyz.pietryga.lotto;
 
 import java.text.ParseException;
-import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeSet;
+import static xyz.pietryga.lotto.TextUtil.*;
 
 public class Main {
 
     public static void main(String[] args) throws ParseException {
-        System.out.println(TextUtil.HAPPY_NUMBERS_HEADER);
-        Scanner sc = new Scanner(System.in);
-        String[] questions = TextUtil.getQuestions();
-        TreeSet<Integer> luckyNumbers = new TreeSet<>();
+	System.out.println(HAPPY_NUMBERS_HEADER);
 
-        int n = 0, max = 0, day = 0, month = 0;
-        do {
-            try {
-                System.out.print(questions[0]);
-                n = sc.nextInt();
+	String property = System.getProperty("line.separator");
+	System.out.println(property);
+	Scanner sc = new Scanner(System.in);
 
-                System.out.print(questions[1]);
-                max = sc.nextInt();
-            } catch (InputMismatchException exception) {
-                System.out.println("Give a number!");
-                if (sc.hasNextLine()) {
-                    sc.nextLine();
-                }
-            }
-        } while (n > max || n <= 0 || max <= 0);
+	TreeSet<Integer> luckyNumbers = new TreeSet<>();
+	int n = 0, max = 0, day = 0, month = 0;
 
-        do {
-            try {
-                System.out.print(questions[2]);
-                day = sc.nextInt();
-            } catch (InputMismatchException exception) {
-                System.out.println("Give a number!");
-                if (sc.hasNextLine()) {
-                    sc.nextLine();
-                }
-            }
-        } while (day < 1 || day > 31);
+	// Total and Max value
+	do {
+	    n = getValue(HappyQuestion.TOTAL.getQuestion(), sc);
+	    max = getValue(HappyQuestion.MAX.getQuestion(), sc);
+	} while (n <= 0 || max <= 0 || n > max);
 
-        do {
-            try {
-                System.out.print(questions[3]);
-                month = sc.nextInt();
-            } catch (InputMismatchException exception) {
-                System.out.println("Give a number!");
-                if (sc.hasNextLine()) {
-                    sc.nextLine();
-                }
-            }
-        } while (month < 1 || month > 12);
-        Random rand = new Random((long) ((day * 3000 + month * 120) * Math.random()));
-        do {
-            luckyNumbers.add(rand.nextInt(max) + 1);
-        } while (luckyNumbers.size() < n);
+	// Day of birth
+	do {
+	    day = getValue(HappyQuestion.DAY.getQuestion(), sc);
+	} while (day < 1 || day > 31);
 
-        System.out.print(TextUtil.HAPPY_RESULT);
-        StringBuilder sb = new StringBuilder();
-        luckyNumbers.forEach(l -> sb.append(l).append(", "));
-        sb.deleteCharAt(sb.length() - 2);
-        System.out.println(sb.toString());
+	// Month of birth
+	do {
+	    month = getValue(HappyQuestion.MONTH.getQuestion(), sc);
+	} while (month < 1 || month > 12);
+
+	Random generator = new Random((long) ((day * 3000 + month * 120) * Math.random()));
+	do {
+	    luckyNumbers.add(generator.nextInt(max) + 1);
+	} while (luckyNumbers.size() < n);
+
+	System.out.print(HAPPY_RESULT + luckyNumbers);
+    }
+
+    private static int getValue(String question, Scanner sc) {
+	System.out.print(question);
+	while (!sc.hasNextInt()) {
+	    sc.next();
+	    sc.skip(".*");
+	    System.out.print("Set a number!\n" + question);
+	}
+	int value = sc.nextInt();
+	sc.skip(".*");
+	return value;
     }
 }
