@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.TreeSet;
 import static xyz.pietryga.lotto.TextUtil.*;
 
-public class Main {
+public class HappyNumbersApp {
 
     public static void main(String[] args) throws ParseException {
 	System.out.println(HAPPY_NUMBERS_HEADER);
@@ -43,7 +43,7 @@ public class Main {
 	System.out.print(HAPPY_RESULT + luckyNumbers);
     }
 
-    private static int getValue(String question, Scanner sc) {
+    static int getValue(String question, Scanner sc) {
 	System.out.print(question);
 	while (!sc.hasNextInt()) {
 	    sc.next();
