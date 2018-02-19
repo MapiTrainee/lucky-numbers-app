@@ -43,7 +43,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        xyz.pietryga.lotto.Main
+                                        xyz.pietryga.lotto.HappyNumbersApp
                                     </mainClass>
                                 </manifest>
                             </archive>
