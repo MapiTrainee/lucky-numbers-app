@@ -1,5 +1,7 @@
 package xyz.pietryga.lotto;
 
+import java.time.Year;
+
 public class TextUtil {
 
     public static final String HAPPY_NUMBERS_HEADER
@@ -13,12 +15,14 @@ public class TextUtil {
 	    + "              |_|    |_|     |___/                                                        \n";
 
     public static final String HAPPY_RESULT = "Your happy numbers are: ";
+    public static final int CURRENT_YEAR = Year.now().getValue();
 
     public enum HappyQuestion {
 	TOTAL("Total lucky numbers [n]: "),
 	MAX("Max value [greater than or equal n]: "),
 	DAY("Day of birth [1-31]: "),
-	MONTH("Month of birth [1-12]: ");
+	MONTH("Month of birth [1-12]: "),
+	YEAR("Year of birth [" + (CURRENT_YEAR-100) + "-" + CURRENT_YEAR + "]: ");
 
 	private final String question;
 

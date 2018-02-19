@@ -10,13 +10,9 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
 	System.out.println(HAPPY_NUMBERS_HEADER);
-
-	String property = System.getProperty("line.separator");
-	System.out.println(property);
 	Scanner sc = new Scanner(System.in);
-
 	TreeSet<Integer> luckyNumbers = new TreeSet<>();
-	int n = 0, max = 0, day = 0, month = 0;
+	int n = 0, max = 0, day = 0, month = 0, year = 0;
 
 	// Total and Max value
 	do {
@@ -34,7 +30,12 @@ public class Main {
 	    month = getValue(HappyQuestion.MONTH.getQuestion(), sc);
 	} while (month < 1 || month > 12);
 
-	Random generator = new Random((long) ((day * 3000 + month * 120) * Math.random()));
+	// Year of birth
+	do {
+	    year = getValue(HappyQuestion.YEAR.getQuestion(), sc);
+	} while (year < CURRENT_YEAR - 100 || year > CURRENT_YEAR);
+
+	Random generator = new Random(System.currentTimeMillis() - (day * month * year));
 	do {
 	    luckyNumbers.add(generator.nextInt(max) + 1);
 	} while (luckyNumbers.size() < n);
